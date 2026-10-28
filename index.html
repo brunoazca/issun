@@ -1,16 +1,760 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Issun — Support</title>
-<style>body{font:16px/1.6 -apple-system,system-ui,sans-serif;max-width:680px;margin:40px auto;padding:0 16px;color:#222;background:#fff}h1{font-size:28px}h2{font-size:18px;margin-top:28px}a{color:#0a66c2}@media (prefers-color-scheme:dark){body{color:#e6e6e6;background:#111}a{color:#6cb6ff}}</style></head>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Issun: Video Compressor</title>
+<meta name="description" content="Issun finds the videos eating your iPhone storage and shrinks them on device, keeping date, location, HDR and audio. Your videos never leave your iPhone.">
+<meta name="theme-color" content="#2C2270">
+<meta name="apple-itunes-app" content="app-id=6827839652">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Issun: Video Compressor">
+<meta property="og:description" content="Shrink videos, free up space. On-device video compression for iPhone.">
+<meta property="og:image" content="https://brunoazca.github.io/issun-legal/img/og.png">
+<meta property="og:url" content="https://brunoazca.github.io/issun-legal/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky-top: #2C2270; --sky-bottom: #130F33; --sky-deep: #0C0A24;
+    --hero-red: #E8452C; --vermilion: #D93E25; --vermilion-hi: #FF6A4D;
+    --gold: #A9690A; --gold-bright: #F0B33E; --needle: #DDE0F0; --ripple: #5E5A78;
+    --canvas: #F6F5FB; --surface: #FFFFFF; --muted: #ECEAF5;
+    --text: #16132E; --text-2: #55516F; --line: #E2E0EE;
+    --shadow: 0 24px 60px -28px rgba(19, 15, 51, 0.45);
+    --font: ui-rounded, "SF Pro Rounded", Nunito, system-ui, -apple-system, sans-serif;
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --vermilion: #FF6A4D; --gold: #F0B33E;
+      --canvas: #100D2A; --surface: #1D1945; --muted: #2A2558;
+      --text: #F1F0FA; --text-2: #ABA8C9; --line: #2E2960;
+      --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --vermilion: #FF6A4D; --gold: #F0B33E;
+    --canvas: #100D2A; --surface: #1D1945; --muted: #2A2558;
+    --text: #F1F0FA; --text-2: #ABA8C9; --line: #2E2960;
+    --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--canvas); color: var(--text); font: 17px/1.6 var(--font); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- App Store CTA ---------- */
+  .cta {
+    --pad: 14px 26px 14px 20px;
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    padding: var(--pad); border-radius: 18px; text-decoration: none; overflow: hidden; isolation: isolate;
+    background: linear-gradient(180deg, #FF5A3C, var(--vermilion));
+    color: #fff; box-shadow: 0 14px 34px -10px rgba(232, 69, 44, 0.75), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+    will-change: transform;
+  }
+  .cta svg { width: 30px; height: 30px; flex: none; fill: currentColor; margin-top: -3px; }
+  .cta .l1 { display: block; font-size: 12px; font-weight: 600; letter-spacing: .02em; opacity: .92; line-height: 1.1; }
+  .cta .l2 { display: block; font-size: 22px; font-weight: 900; line-height: 1.1; letter-spacing: -.01em; }
+  .cta::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%);
+    transform: translateX(-120%); animation: shine 4.2s var(--ease-out) 1.6s infinite;
+  }
+  .cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 22px 44px -12px rgba(232, 69, 44, 0.85), inset 0 1px 0 rgba(255,255,255,.35); }
+  .cta:active { transform: translateY(0) scale(.98); }
+  .cta:focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 4px; }
+  .cta.small { --pad: 9px 16px 9px 12px; border-radius: 13px; gap: 8px; }
+  .cta.small svg { width: 20px; height: 20px; margin-top: -2px; }
+  .cta.small .l2 { font-size: 15px; }
+  @keyframes shine { 0% { transform: translateX(-120%); } 40%, 100% { transform: translateX(120%); } }
+  .cta-note { font-size: 14px; color: #ABA8C9; margin-top: 14px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto; z-index: 50; padding: 12px 0;
+    transition: background .3s, backdrop-filter .3s, box-shadow .3s;
+  }
+  .nav.scrolled { background: rgba(19, 15, 51, .72); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 1px 0 rgba(255,255,255,.06); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 900; font-size: 20px; }
+  .brand img { width: 36px; height: 36px; border-radius: 10px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+  .nav-links { display: none; gap: 26px; font-weight: 700; font-size: 15px; }
+  .nav-links a { color: #DDE0F0; text-decoration: none; opacity: .85; transition: opacity .2s; }
+  .nav-links a:hover { opacity: 1; }
+  @media (min-width: 860px) { .nav-links { display: flex; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; min-height: 100svh; color: #fff; overflow: hidden;
+    background: radial-gradient(120% 70% at 70% 30%, #3A2E8C 0%, transparent 60%), linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 70%, var(--sky-deep) 100%);
+    padding: 108px 0 140px;
+  }
+  .stars { position: absolute; inset: 0; pointer-events: none; }
+  .star { position: absolute; border-radius: 50%; background: #fff; opacity: .2; animation: twinkle var(--d, 4s) ease-in-out var(--delay, 0s) infinite; }
+  @keyframes twinkle { 0%, 100% { opacity: .15; transform: scale(.8); } 50% { opacity: var(--o, .9); transform: scale(1.15); } }
+  .shooting { position: absolute; top: 14%; left: 62%; width: 140px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,.9), transparent); transform: rotate(-24deg); opacity: 0; animation: shoot 9s ease-in 3s infinite; }
+  .shooting.s2 { top: 32%; left: 18%; animation-delay: 7.5s; animation-duration: 13s; }
+  @keyframes shoot { 0% { opacity: 0; translate: 0 0; } 2% { opacity: 1; } 8% { opacity: 0; translate: -340px 150px; } 100% { opacity: 0; translate: -340px 150px; } }
+  .moon { position: absolute; right: -8vw; top: 6vh; width: min(58vw, 640px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(240,179,62,.22), rgba(240,179,62,.06) 45%, transparent 70%); filter: blur(2px); pointer-events: none; animation: breathe 8s ease-in-out infinite; }
+  @keyframes breathe { 50% { transform: scale(1.06); opacity: .85; } }
+
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 960px) { .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 32px; } }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); font-size: 14px; font-weight: 700; color: var(--needle); }
+  .eyebrow .dot { width: 20px; height: 20px; border-radius: 50%; background: var(--gold-bright); display: grid; place-items: center; color: var(--sky-bottom); font-size: 12px; font-weight: 900; }
+  .hero h1 { font-size: clamp(42px, 6.4vw, 78px); line-height: 1.0; font-weight: 900; letter-spacing: -0.025em; margin: 22px 0 20px; }
+  .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+  .hero h1 .line > span { display: inline-block; transform: translateY(105%); animation: rise 1s var(--ease-out) forwards; }
+  .hero h1 .line:nth-child(2) > span { animation-delay: .12s; }
+  .hero h1 .gold { background: linear-gradient(100deg, #F0B33E 0%, #FFD98A 35%, #F0B33E 60%, #E8452C 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: rise 1s var(--ease-out) .12s forwards, sheen 6s ease-in-out 1.2s infinite; }
+  @keyframes rise { to { transform: translateY(0); } }
+  @keyframes sheen { 50% { background-position: 100% 0; } }
+  .hero .lede { font-size: clamp(18px, 2.1vw, 21px); color: #CFCDEB; max-width: 34em; margin: 0 0 32px; }
+  .fade-up { opacity: 0; transform: translateY(18px); animation: fadeUp .9s var(--ease-out) forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  .d1 { animation-delay: .25s; } .d2 { animation-delay: .4s; } .d3 { animation-delay: .55s; } .d4 { animation-delay: .7s; }
+  .trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 28px; font-size: 15px; font-weight: 700; color: var(--needle); }
+  .trust span { display: inline-flex; align-items: center; gap: 7px; }
+  .trust svg { width: 18px; height: 18px; color: var(--gold-bright); }
+
+  /* Hero visual */
+  .stage { position: relative; height: 640px; perspective: 1400px; }
+  @media (max-width: 959px) { .stage { height: 600px; max-width: 420px; margin: 0 auto; width: 100%; } }
+  @media (max-width: 420px) { .stage { height: 540px; } }
+  .phone {
+    position: relative; width: 100%; aspect-ratio: 1206 / 2622; border-radius: 15% / 7%;
+    padding: 3.2%; background: linear-gradient(145deg, #3B3866, #0E0C22 40%, #1B1840);
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,.12) inset, 0 40px 80px -30px rgba(0,0,0,.7), 0 0 0 1px #000;
+  }
+  .phone .screen { position: relative; width: 100%; height: 100%; border-radius: 12.5% / 5.8%; overflow: hidden; background: #F6F5FB; }
+  .phone .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-phone { position: absolute; left: 50%; top: 0; width: 290px; translate: -50% 0; transform-style: preserve-3d; animation: float 7s ease-in-out infinite, phoneIn 1.3s var(--ease-out) .2s both; }
+  @media (max-width: 420px) { .hero-phone { width: 248px; } }
+  .tilt { transition: transform .5s var(--ease-out); transform: rotateY(-14deg) rotateX(6deg) rotateZ(2deg); transform-style: preserve-3d; }
+  @keyframes float { 50% { translate: -50% -14px; } }
+  @keyframes phoneIn { from { opacity: 0; translate: -50% 80px; } }
+  .glare { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(115deg, rgba(255,255,255,.22) 0%, transparent 32%); pointer-events: none; }
+
+  .chip {
+    position: absolute; z-index: 3; background: rgba(255,255,255,.96); color: #16132E; border-radius: 20px;
+    box-shadow: 0 24px 50px -18px rgba(5, 3, 25, .7); padding: 14px 16px; font-weight: 800;
+    animation: chipIn .9s var(--ease-out) both, bob 6s ease-in-out infinite;
+  }
+  @keyframes chipIn { from { opacity: 0; transform: translateY(24px) scale(.9); } }
+  @keyframes bob { 50% { translate: 0 -10px; } }
+  .chip-shrink { left: -2%; top: 118px; width: 236px; animation-delay: .9s, 1s; }
+  .chip-shrink .k { font-size: 12px; color: #6F6B8C; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .chip-shrink .nums { display: flex; align-items: baseline; justify-content: space-between; margin: 4px 0 10px; }
+  .chip-shrink .from { color: #8C88A6; text-decoration: line-through; text-decoration-color: rgba(232,69,44,.6); font-size: 15px; }
+  .chip-shrink .to { color: var(--gold); font-size: 24px; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 10px; border-radius: 6px; background: #ECEAF5; overflow: hidden; }
+  .bar-fill { height: 100%; width: 100%; border-radius: 6px; background: linear-gradient(90deg, #F0B33E, #E8452C); transition: width 2.2s var(--ease-out); }
+  .chip-shrink .pct { position: absolute; right: -14px; top: -16px; background: var(--hero-red); color: #fff; border-radius: 999px; padding: 4px 11px; font-size: 15px; box-shadow: 0 8px 20px -6px rgba(232,69,44,.8); transform: rotate(6deg); }
+  .chip-kept { right: -2%; top: 330px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; animation-delay: 1.15s, 2.2s; }
+  .chip-kept div { display: flex; gap: 8px; align-items: center; }
+  .chip-kept svg { width: 18px; height: 18px; color: var(--gold); flex: none; }
+  .chip-local { left: 4%; bottom: 74px; display: flex; align-items: center; gap: 10px; font-size: 14px; background: rgba(29, 25, 69, .86); color: #fff; border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation-delay: 1.4s, 3.1s; }
+  .chip-local .ico { width: 30px; height: 30px; border-radius: 9px; background: var(--gold-bright); display: grid; place-items: center; color: var(--sky-bottom); }
+  .chip-local .ico svg { width: 18px; height: 18px; }
+  @media (max-width: 959px) {
+    .chip-shrink { left: -4px; top: 70px; width: 210px; }
+    .chip-kept { right: -4px; top: 300px; }
+    .chip-local { left: 0; bottom: 30px; }
+  }
+  @media (max-width: 420px) { .chip-shrink { width: 190px; padding: 12px 14px; } .chip-kept { font-size: 13px; } }
+
+  /* Water + boat */
+  .water { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; pointer-events: none; }
+  .wave { position: absolute; left: 0; width: 200%; height: 100%; background-repeat: repeat-x; animation: drift linear infinite; }
+  .wave.w1 { bottom: -38px; opacity: .45; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='120' viewBox='0 0 800 120'%3E%3Cpath d='M0 60 Q100 30 200 60 T400 60 T600 60 T800 60 V120 H0Z' fill='%231D1945'/%3E%3C/svg%3E"); background-size: 800px 120px; animation-duration: 22s; }
+  .wave.w2 { bottom: -58px; opacity: 1; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='120' viewBox='0 0 600 120'%3E%3Cpath d='M0 60 Q75 40 150 60 T300 60 T450 60 T600 60 V120 H0Z' fill='%23100D2A'/%3E%3C/svg%3E"); background-size: 600px 120px; animation-duration: 14s; animation-direction: reverse; }
+  @keyframes drift { to { transform: translateX(-50%); } }
+  .hero-boat { position: absolute; bottom: 44px; width: 120px; left: 0; animation: sail 38s linear infinite; z-index: 2; }
+  .hero-boat .mark { animation: rock 4s ease-in-out infinite; transform-origin: 50% 80%; }
+  @keyframes sail { from { transform: translateX(-160px); } to { transform: translateX(calc(100vw + 40px)); } }
+  @keyframes rock { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(4deg) translateY(-6px); } }
+
+  /* The mark */
+  .mark .sparkle { transform-box: fill-box; transform-origin: center; animation: spark 2.6s ease-in-out infinite; }
+  .mark .sail { transform-box: fill-box; transform-origin: 0% 50%; animation: flutter 3s ease-in-out infinite; }
+  .mark .ripple1 { transform-box: fill-box; transform-origin: center; animation: ripple 3s ease-in-out infinite; }
+  .mark .ripple2 { transform-box: fill-box; transform-origin: center; animation: ripple 3s ease-in-out .4s infinite; }
+  @keyframes spark { 0%, 100% { transform: scale(.75) rotate(0); opacity: .8; } 50% { transform: scale(1.15) rotate(45deg); opacity: 1; } }
+  @keyframes flutter { 50% { transform: scaleX(.92) skewY(-3deg); } }
+  @keyframes ripple { 50% { transform: scaleX(.78); opacity: .55; } }
+
+  /* ---------- Sections ---------- */
+  section { position: relative; }
+  .section { padding: 110px 0; }
+  .kicker { display: inline-block; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; color: var(--vermilion); margin-bottom: 12px; }
+  .h2 { font-size: clamp(32px, 5vw, 56px); line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .sub { font-size: 19px; color: var(--text-2); max-width: 36em; margin: 0; }
+  .center { text-align: center; }
+  .center .sub { margin: 0 auto; }
+
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); transition-delay: var(--rd, 0s); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Stat band */
+  .band { background: var(--sky-deep); color: #fff; padding: 8px 0 70px; }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (min-width: 860px) { .stats { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+  .stat { background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.09); border-radius: 22px; padding: 22px 20px; }
+  .stat b { display: block; font-size: clamp(21px, 2.4vw, 30px); font-weight: 900; color: var(--gold-bright); line-height: 1.1; letter-spacing: -.01em; }
+  .stat span { color: #ABA8C9; font-size: 15px; font-weight: 600; }
+
+  /* How it works */
+  .how-grid { display: grid; gap: 40px; margin-top: 60px; }
+  @media (min-width: 960px) { .how-grid { grid-template-columns: 1fr 380px; gap: 80px; } }
+  .steps { display: flex; flex-direction: column; }
+  .step { padding: 28px 0 28px 26px; border-left: 3px solid var(--line); transition: border-color .5s, opacity .5s; position: relative; }
+  @media (min-width: 960px) { .step { min-height: 52vh; display: flex; flex-direction: column; justify-content: center; opacity: .38; } .step.active { opacity: 1; } }
+  .step.active { border-color: var(--vermilion); }
+  .step .num { font-size: 14px; font-weight: 900; color: var(--vermilion); letter-spacing: .1em; }
+  .step h3 { font-size: clamp(26px, 3.2vw, 36px); line-height: 1.12; margin: 6px 0 10px; font-weight: 900; letter-spacing: -.01em; }
+  .step p { color: var(--text-2); margin: 0; max-width: 30em; font-size: 18px; }
+  .step .inline-shot { width: min(260px, 70vw); margin: 26px 0 0; }
+  @media (min-width: 960px) { .step .inline-shot { display: none; } }
+  .sticky-phone { display: none; }
+  @media (min-width: 960px) {
+    .sticky-phone { display: block; position: sticky; top: calc(50vh - 340px); height: 690px; }
+    .sticky-phone .phone { width: 320px; margin: 0 auto; }
+    .sticky-phone .screen img { opacity: 0; transform: scale(1.06); transition: opacity .7s var(--ease-out), transform 1s var(--ease-out); }
+    .sticky-phone .screen img.on { opacity: 1; transform: none; }
+  }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; position: relative; }
+  .pill { padding: 7px 14px; border-radius: 999px; background: var(--muted); font-weight: 800; font-size: 14px; color: var(--text-2); transition: background .4s, color .4s, transform .4s var(--ease-out); }
+  .pill.on { background: var(--vermilion); color: #fff; transform: translateY(-2px); }
+
+  /* Features */
+  .features { background: var(--surface); }
+  .feat-grid { display: grid; gap: 18px; margin-top: 56px; }
+  @media (min-width: 700px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1020px) { .feat-grid { grid-template-columns: repeat(3, 1fr); } }
+  .feat {
+    position: relative; background: var(--canvas); border-radius: 26px; padding: 28px 26px 30px; overflow: hidden;
+    transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out), opacity .9s var(--ease-out);
+  }
+  .feat:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .feat::after { content: ""; position: absolute; inset: auto -30% -60% auto; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(240,179,62,.18), transparent 70%); transition: transform .8s var(--ease-out); }
+  .feat:hover::after { transform: scale(1.5) translate(-20px, -20px); }
+  .feat .ico { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); color: var(--gold-bright); margin-bottom: 18px; box-shadow: 0 10px 22px -10px rgba(44,34,112,.8), inset 0 0 0 1px rgba(240,179,62,.28); }
+  .feat .ico svg { width: 26px; height: 26px; }
+  .feat h3 { font-size: 22px; margin: 0 0 8px; font-weight: 900; line-height: 1.2; }
+  .feat p { margin: 0; color: var(--text-2); }
+
+  /* Ranks */
+  .ranks-grid { display: grid; gap: 56px; align-items: center; }
+  @media (min-width: 960px) { .ranks-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+  .ladder { margin: 34px 0 0; position: relative; }
+  .ladder ol { list-style: none; margin: 0; padding: 0; }
+  .ladder::before { content: ""; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 4px; border-radius: 2px; background: var(--line); }
+  .ladder .fill { position: absolute; left: 21px; top: 22px; width: 4px; border-radius: 2px; height: 0; background: linear-gradient(180deg, var(--gold-bright), var(--hero-red)); transition: height 2.4s var(--ease-out); }
+  .ladder.in .fill { height: calc(100% - 44px); }
+  .ladder li { position: relative; display: flex; align-items: center; gap: 16px; padding: 8px 0; }
+  .ladder .node { width: 46px; height: 46px; border-radius: 50%; flex: none; display: grid; place-items: center; background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); border: 3px solid var(--line); position: relative; z-index: 1; transform: scale(.6); opacity: 0; transition: transform .7s var(--ease-out), opacity .7s, border-color .7s; transition-delay: var(--nd); }
+  .ladder.in .node { transform: none; opacity: 1; border-color: var(--gold-bright); }
+  .ladder .node svg { width: 22px; height: 22px; }
+  .ladder b { display: block; font-size: 19px; font-weight: 900; line-height: 1.2; }
+  .ladder small { color: var(--text-2); font-size: 15px; font-weight: 700; }
+  .ladder li:last-child b { background: linear-gradient(90deg, var(--gold), var(--hero-red)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .rank-phone { width: min(320px, 78vw); margin: 0 auto; position: relative; }
+  .rank-phone::before { content: ""; position: absolute; inset: 10% -20%; background: radial-gradient(closest-side, rgba(240,179,62,.35), transparent); z-index: -1; filter: blur(10px); }
+  .legend { margin-top: 26px; padding: 18px 20px; border-radius: 18px; background: var(--muted); color: var(--text-2); font-size: 16px; }
+  .legend strong { color: var(--text); }
+
+  /* Privacy band */
+  .private { color: #fff; background: radial-gradient(80% 60% at 50% 0%, #3A2E8C, transparent 70%), linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); overflow: hidden; }
+  .private .sub { color: #CFCDEB; }
+  .private .kicker { color: var(--gold-bright); }
+  .vault { position: relative; width: 150px; height: 150px; margin: 0 auto 30px; }
+  .vault .ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(240,179,62,.5); animation: pulse 3.2s ease-out infinite; }
+  .vault .ring.r2 { animation-delay: 1.07s; } .vault .ring.r3 { animation-delay: 2.14s; }
+  @keyframes pulse { from { transform: scale(.55); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+  .vault .core { position: absolute; inset: 30px; border-radius: 28px; background: linear-gradient(180deg, #FFCF6B, var(--gold-bright)); display: grid; place-items: center; box-shadow: 0 18px 40px -12px rgba(240,179,62,.7); color: var(--sky-bottom); }
+  .vault .core svg { width: 46px; height: 46px; }
+  .promises { display: grid; gap: 14px; margin-top: 48px; }
+  @media (min-width: 760px) { .promises { grid-template-columns: repeat(3, 1fr); } }
+  .promise { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; padding: 22px; text-align: left; }
+  .promise b { display: block; font-size: 19px; margin-bottom: 4px; }
+  .promise span { color: #CFCDEB; font-size: 16px; }
+  .private a.link { color: var(--gold-bright); font-weight: 800; }
+
+  /* FAQ */
+  .faq { max-width: 800px; margin: 48px auto 0; }
+  details { background: var(--surface); border-radius: 20px; margin-bottom: 12px; box-shadow: 0 1px 0 var(--line); overflow: hidden; }
+  summary { list-style: none; cursor: pointer; padding: 20px 56px 20px 22px; font-weight: 800; font-size: 18px; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: ""; position: absolute; right: 22px; top: 50%; width: 12px; height: 12px; border-right: 3px solid var(--vermilion); border-bottom: 3px solid var(--vermilion); transform: translateY(-70%) rotate(45deg); transition: transform .35s var(--ease-out); }
+  details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+  details .ans { padding: 0 22px 20px; color: var(--text-2); }
+  details[open] .ans { animation: fadeUp .5s var(--ease-out); }
+  .contact { text-align: center; margin-top: 32px; color: var(--text-2); }
+  .contact a { color: var(--vermilion); font-weight: 800; }
+
+  /* Final CTA */
+  .final { color: #fff; text-align: center; background: linear-gradient(180deg, var(--sky-bottom), var(--sky-deep)); padding: 120px 0 0; overflow: hidden; }
+  .final .icon { width: 116px; height: 116px; border-radius: 27px; margin: 0 auto 28px; box-shadow: 0 24px 60px -16px rgba(240,179,62,.5), 0 0 0 1px rgba(255,255,255,.1); animation: float2 6s ease-in-out infinite; }
+  @keyframes float2 { 50% { transform: translateY(-10px) rotate(-2deg); } }
+  .final .sub { color: #CFCDEB; margin: 0 auto 36px; }
+  .final .sea { position: relative; height: 170px; margin-top: 70px; }
+  .final .sea .hero-boat { bottom: 52px; animation-duration: 30s; animation-delay: -12s; }
+
+  footer { background: var(--sky-deep); color: #8E8AB0; font-size: 15px; padding: 26px 0 36px; border-top: 1px solid rgba(255,255,255,.06); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  footer a { color: #DDE0F0; text-decoration: none; font-weight: 700; }
+  footer a:hover { text-decoration: underline; }
+  footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .hero h1 .line > span, .fade-up, .reveal, .chip { opacity: 1 !important; transform: none !important; }
+    .ladder .node { opacity: 1; transform: none; border-color: var(--gold-bright); }
+    .ladder .fill { height: calc(100% - 44px); }
+    .hero-boat { left: 8%; }
+    .sticky-phone .screen img.on { opacity: 1; }
+  }
+</style>
+</head>
 <body>
-<h1>Issun Support</h1>
-<p>Issun finds the videos taking up the most space on your iPhone and compresses them on device, keeping their original date and location.</p>
-<h2>Contact</h2>
-<p>Questions, bugs or feedback: <a href="mailto:issunapp@gmail.com">issunapp@gmail.com</a>. We usually reply within a few days.</p>
-<h2>FAQ</h2>
-<p><strong>Where did my storage go after deleting originals?</strong><br>Deleted videos go to Recently Deleted in the Photos app. Empty it to get the space back.</p>
-<p><strong>Can I undo a deletion?</strong><br>Yes. Originals stay in Recently Deleted for up to 30 days and can be restored from there.</p>
-<p><strong>Are my videos uploaded?</strong><br>No. All compression happens on your iPhone.</p>
-<h2>Privacy</h2>
-<p>Read the <a href="privacy.html">Privacy Policy</a>.</p>
-</body></html>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="apple" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="hero" viewBox="380 470 130 190"><circle cx="443" cy="500" r="19" fill="#E8452C"/><circle cx="443" cy="555" r="48" fill="#E8452C"/><path d="M412 600H474L494 650H392Z" fill="#E8452C"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/apple-touch-icon.png" alt="">Issun</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#ranks">Ranks</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#support">Support</a>
+    </nav>
+    <a class="cta small" href="https://apps.apple.com/app/id6827839652" aria-label="Download Issun on the App Store">
+      <svg><use href="#apple"/></svg><span class="l2">Download</span>
+    </a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ======================= HERO ======================= -->
+  <section class="hero">
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <div class="shooting" aria-hidden="true"></div>
+    <div class="shooting s2" aria-hidden="true"></div>
+    <div class="moon" aria-hidden="true"></div>
+
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow fade-up"><span class="dot">✦</span>Video compressor for iPhone</span>
+        <h1>
+          <span class="line"><span>Shrink your videos.</span></span>
+          <span class="line"><span class="gold">Free up space.</span></span>
+        </h1>
+        <p class="lede fade-up d1">Your iPhone is full and your videos are the reason. Issun finds the biggest ones and shrinks them, often to a fraction of their size, without making them look worse.</p>
+        <div class="fade-up d2">
+          <a class="cta" id="hero-cta" href="https://apps.apple.com/app/id6827839652">
+            <svg aria-hidden="true"><use href="#apple"/></svg>
+            <span><span class="l1">Download on the</span><span class="l2">App Store</span></span>
+          </a>
+          <div class="cta-note">For iPhone · Requires iOS 17 or later</div>
+        </div>
+        <div class="trust fade-up d3">
+          <span><svg><use href="#check"/></svg>Compressed on device</span>
+          <span><svg><use href="#check"/></svg>No account</span>
+          <span><svg><use href="#check"/></svg>Date &amp; location kept</span>
+        </div>
+      </div>
+
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="hero-phone">
+          <div class="tilt" id="tilt">
+            <div class="phone">
+              <div class="screen"><img src="img/selected.webp" alt="" width="720" height="1565" fetchpriority="high"></div>
+              <div class="glare"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chip chip-shrink">
+          <div class="k">One 3:56 video</div>
+          <div class="nums"><span class="from">1.18 GB</span><span class="to" id="shrink-to">1.18 GB</span></div>
+          <div class="bar-track"><div class="bar-fill" id="shrink-bar"></div></div>
+          <span class="pct" id="shrink-pct">−88%</span>
+        </div>
+
+        <div class="chip chip-kept">
+          <div><svg><use href="#check"/></svg>Original date</div>
+          <div><svg><use href="#check"/></svg>Location</div>
+          <div><svg><use href="#check"/></svg>HDR &amp; audio</div>
+        </div>
+
+        <div class="chip chip-local">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          Never leaves your iPhone
+        </div>
+      </div>
+    </div>
+
+    <div class="water" aria-hidden="true">
+      <div class="hero-boat"><svg class="mark" viewBox="230 170 600 780"><use href="#mark-art"/></svg></div>
+      <div class="wave w1"></div>
+      <div class="wave w2"></div>
+    </div>
+  </section>
+
+  <!-- The mark from the app icon: the one-inch hero sailing his bowl boat. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="mark-art">
+        <path class="sparkle" d="M572 184Q581 219 616 228Q581 237 572 272Q563 237 528 228Q563 219 572 184Z" fill="#fff"/>
+        <rect x="564" y="250" width="16" height="400" rx="4" fill="#DDE0F0"/>
+        <path class="sail" d="M598 285L808 437L598 590Z" fill="#fff" stroke="#fff" stroke-width="26" stroke-linejoin="round"/>
+        <circle cx="443" cy="500" r="19" fill="#E8452C"/>
+        <circle cx="443" cy="555" r="48" fill="#E8452C"/>
+        <path d="M412 600H474L494 650H392Z" fill="#E8452C"/>
+        <path d="M470 620L565 590" stroke="#E8452C" stroke-width="22" stroke-linecap="round"/>
+        <path d="M284 668C300 860 724 860 740 668Z" fill="#F0B33E"/>
+        <rect x="258" y="644" width="508" height="36" rx="18" fill="#F0B33E"/>
+        <rect class="ripple1" x="250" y="866" width="524" height="18" rx="9" fill="#63607E"/>
+        <rect class="ripple2" x="350" y="914" width="324" height="18" rx="9" fill="#63607E"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ======================= STAT BAND ======================= -->
+  <section class="band">
+    <div class="wrap stats">
+      <div class="stat reveal"><b>Biggest first</b><span>Every video sorted by size</span></div>
+      <div class="stat reveal" style="--rd:.08s"><b>HEVC</b><span>Modern, efficient encoding</span></div>
+      <div class="stat reveal" style="--rd:.16s"><b>Never bigger</b><span>No file grows past its original</span></div>
+      <div class="stat reveal" style="--rd:.24s"><b>100% local</b><span>No uploads, no accounts</span></div>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="kicker">How it works</span>
+        <h2 class="h2">From full storage to<br>free space in four steps.</h2>
+        <p class="sub">No settings to study and no file formats to pick. Issun shows you where the space went and handles the rest.</p>
+      </div>
+
+      <div class="how-grid">
+        <div class="steps" id="steps">
+          <article class="step active" data-shot="0">
+            <span class="num">STEP 01</span>
+            <h3>See where your storage went.</h3>
+            <p>Issun lists every video in your library sorted by size, so the space hogs are right at the top. Select the ones you want to shrink.</p>
+            <div class="inline-shot phone"><div class="screen"><img src="img/selected.webp" alt="Issun gallery showing videos sorted by size, largest first" loading="lazy" width="720" height="1565"></div></div>
+          </article>
+          <article class="step" data-shot="1">
+            <span class="num">STEP 02</span>
+            <h3>Choose the quality and see the savings.</h3>
+            <p>Pick a level from Small to Maximum for all videos at once, or fine-tune each one. You see the estimated size before you start.</p>
+            <div class="pill-row" id="pills" aria-hidden="true">
+              <span class="pill">Small</span><span class="pill">Balanced</span><span class="pill on">High</span><span class="pill">Maximum</span>
+            </div>
+            <div class="inline-shot phone"><div class="screen"><img src="img/setup.webp" alt="Compression setup with a quality slider and estimated sizes" loading="lazy" width="720" height="1565"></div></div>
+          </article>
+          <article class="step" data-shot="2">
+            <span class="num">STEP 03</span>
+            <h3>Compress. Nothing lost but space.</h3>
+            <p>Compressed copies go back into your library with the original date and location, so your timeline stays exactly the same. HDR, orientation and audio are kept too.</p>
+            <div class="inline-shot phone"><div class="screen"><img src="img/done.webp" alt="Results screen showing 2.7 GB saved across five videos" loading="lazy" width="720" height="1565"></div></div>
+          </article>
+          <article class="step" data-shot="3">
+            <span class="num">STEP 04</span>
+            <h3>Compare, then clean up.</h3>
+            <p>Play the original and the compressed version and switch between them. When you're happy, delete the originals in one step, and Issun walks you through emptying Recently Deleted to get the space back.</p>
+            <div class="inline-shot phone"><div class="screen"><img src="img/compare.webp" alt="Compare player switching between compressed and original" loading="lazy" width="720" height="1565"></div></div>
+          </article>
+        </div>
+
+        <div class="sticky-phone" aria-hidden="true">
+          <div class="phone">
+            <div class="screen" id="sticky-screen">
+              <img class="on" src="img/selected.webp" alt="" width="720" height="1565">
+              <img src="img/setup.webp" alt="" loading="lazy" width="720" height="1565">
+              <img src="img/done.webp" alt="" loading="lazy" width="720" height="1565">
+              <img src="img/compare.webp" alt="" loading="lazy" width="720" height="1565">
+            </div>
+            <div class="glare"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= FEATURES ======================= -->
+  <section class="section features" id="features">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="kicker">Features</span>
+        <h2 class="h2">Small files.<br>Big memories intact.</h2>
+        <p class="sub">Everything you need to win back storage, without losing what matters.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h11M4 18h6"/></svg></div>
+          <h3>Biggest first</h3>
+          <p>Your whole video library sorted by size, with the total right on top. See in seconds what's eating your storage.</p>
+        </div>
+        <div class="feat reveal" style="--rd:.08s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h10M18 8h2M4 16h4M12 16h8"/><circle cx="16" cy="8" r="2"/><circle cx="10" cy="16" r="2"/></svg></div>
+          <h3>You choose the quality</h3>
+          <p>Four levels from Small to Maximum, with estimated savings and visual quality shown before you start.</p>
+        </div>
+        <div class="feat reveal" style="--rd:.16s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+          <h3>Nothing lost but space</h3>
+          <p>Original date and location carried over. HDR, orientation and audio kept. A file never comes out bigger than it went in.</p>
+        </div>
+        <div class="feat reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="8" height="14" rx="2"/><rect x="13" y="5" width="8" height="14" rx="2"/><path d="M6.5 10.5l2 1.5-2 1.5z" fill="currentColor"/><path d="M16.5 10.5l2 1.5-2 1.5z" fill="currentColor"/></svg></div>
+          <h3>Compare side by side</h3>
+          <p>Play the compressed copy and flip to the original. Delete originals only when you're happy, with one confirmation.</p>
+        </div>
+        <div class="feat reveal" style="--rd:.08s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10 18.5h4"/><path d="M9.5 10.5l2 2 3.5-4"/></svg></div>
+          <h3>Stays on your iPhone</h3>
+          <p>All compression happens on your device. No account to create and no uploads, ever.</p>
+        </div>
+        <div class="feat reveal" style="--rd:.16s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
+          <h3>Keeps going</h3>
+          <p>On iOS 26, compression continues in the background with a system progress indicator while you use other apps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= RANKS ======================= -->
+  <section class="section" id="ranks">
+    <div class="wrap ranks-grid">
+      <div class="reveal">
+        <span class="kicker">Your journey</span>
+        <h2 class="h2">Every gigabyte freed earns a rank.</h2>
+        <p class="sub">Issun tracks the space you free and the videos you compress. Climb the ranks and share your savings card.</p>
+        <div class="ladder" id="ladder">
+          <span class="fill" aria-hidden="true"></span>
+          <ol>
+          <li><span class="node" style="--nd:.1s"><svg><use href="#hero"/></svg></span><div><b>Little Traveler</b><small>Where every journey starts</small></div></li>
+          <li><span class="node" style="--nd:.4s"><svg><use href="#hero"/></svg></span><div><b>River Rower</b><small>100 MB freed</small></div></li>
+          <li><span class="node" style="--nd:.7s"><svg><use href="#hero"/></svg></span><div><b>Needle Wielder</b><small>1 GB freed</small></div></li>
+          <li><span class="node" style="--nd:1s"><svg><use href="#hero"/></svg></span><div><b>Bowl Captain</b><small>5 GB freed</small></div></li>
+          <li><span class="node" style="--nd:1.3s"><svg><use href="#hero"/></svg></span><div><b>Oni Slayer</b><small>20 GB freed</small></div></li>
+          <li><span class="node" style="--nd:1.6s"><svg><use href="#hero"/></svg></span><div><b>Legend of the Inch</b><small>50 GB freed</small></div></li>
+          </ol>
+        </div>
+        <p class="legend"><strong>Why "Issun"?</strong> The app is named after Issun-bōshi, the one-inch hero of Japanese folklore who sailed a rice bowl with a needle for a sword. Small, but mighty, just like your videos after Issun.</p>
+      </div>
+      <div class="reveal" style="--rd:.15s">
+        <div class="rank-phone phone"><div class="screen"><img src="img/stats.webp" alt="Profile screen with the Bowl Captain rank and a 6.7 GB freed savings card" loading="lazy" width="720" height="1565"></div><div class="glare"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PRIVACY ======================= -->
+  <section class="section private center" id="privacy">
+    <div class="wrap">
+      <div class="vault reveal" aria-hidden="true">
+        <span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <span class="core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      </div>
+      <div class="reveal">
+        <span class="kicker">Privacy</span>
+        <h2 class="h2">Your videos never<br>leave your iPhone.</h2>
+        <p class="sub">Issun reads and writes your Photos library only on your device. Your videos, file names, dates and locations are never sent anywhere.</p>
+      </div>
+      <div class="promises">
+        <div class="promise reveal"><b>On-device compression</b><span>Every frame is re-encoded by your iPhone itself.</span></div>
+        <div class="promise reveal" style="--rd:.08s"><b>No account</b><span>Open the app and go. No sign-up, no email.</span></div>
+        <div class="promise reveal" style="--rd:.16s"><b>No uploads</b><span>We don't have servers that receive your videos.</span></div>
+      </div>
+      <p class="reveal" style="margin-top:36px"><a class="link" href="privacy.html">Read the full privacy policy →</a></p>
+    </div>
+  </section>
+
+  <!-- ======================= SUPPORT / FAQ ======================= -->
+  <section class="section" id="support">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="kicker">Support</span>
+        <h2 class="h2">Questions, answered.</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal">
+          <summary>Are my videos uploaded anywhere?</summary>
+          <div class="ans">No. All compression happens on your iPhone. Your videos never leave your device.</div>
+        </details>
+        <details class="reveal">
+          <summary>Will my videos look worse?</summary>
+          <div class="ans">Issun re-encodes to HEVC and shows an estimated visual quality before you start. You choose the level, from Small to Maximum. Afterwards you can play the compressed copy and the original to compare them before deleting anything.</div>
+        </details>
+        <details class="reveal">
+          <summary>Do I lose the date and location?</summary>
+          <div class="ans">No. Compressed copies are saved to your library with the original creation date and location, so they stay in the same place in your timeline.</div>
+        </details>
+        <details class="reveal">
+          <summary>Where did my storage go after deleting originals?</summary>
+          <div class="ans">Deleted videos go to Recently Deleted in the Photos app. Empty it to get the space back. Issun walks you through it.</div>
+        </details>
+        <details class="reveal">
+          <summary>Can I undo a deletion?</summary>
+          <div class="ans">Yes. Originals stay in Recently Deleted for up to 30 days and can be restored from there.</div>
+        </details>
+        <details class="reveal">
+          <summary>Why is there an ad?</summary>
+          <div class="ans">A short video ad plays while each batch compresses. If no ad is available, compression continues without one.</div>
+        </details>
+        <details class="reveal">
+          <summary>Which devices are supported?</summary>
+          <div class="ans">iPhone with iOS 17 or later. Background compression with a system progress indicator needs iOS 26.</div>
+        </details>
+      </div>
+      <p class="contact reveal">Still stuck? Questions, bugs or feedback: <a href="mailto:issunapp@gmail.com">issunapp@gmail.com</a>. We usually reply within a few days.</p>
+    </div>
+  </section>
+
+  <!-- ======================= FINAL CTA ======================= -->
+  <section class="final">
+    <div class="wrap">
+      <img class="icon reveal" src="img/icon-512.png" alt="Issun app icon" width="512" height="512" loading="lazy">
+      <h2 class="h2 reveal">Make room for<br>new memories.</h2>
+      <p class="sub reveal">Find the biggest videos on your iPhone and shrink them, right on your device.</p>
+      <div class="reveal">
+        <a class="cta" href="https://apps.apple.com/app/id6827839652">
+          <svg aria-hidden="true"><use href="#apple"/></svg>
+          <span><span class="l1">Download on the</span><span class="l2">App Store</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="sea" aria-hidden="true">
+      <div class="hero-boat"><svg class="mark" viewBox="230 170 600 780"><use href="#mark-art"/></svg></div>
+      <div class="water"><div class="wave w1"></div><div class="wave w2" style="filter:brightness(.8)"></div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Bruno Azambuja Carvalho</span>
+    <nav aria-label="Footer">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="#support">Support</a>
+      <a href="mailto:issunapp@gmail.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Starfield.
+  const stars = document.getElementById('stars');
+  const count = innerWidth < 700 ? 60 : 120;
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('span');
+    const size = Math.random() < 0.85 ? 1 + Math.random() * 1.5 : 2.5 + Math.random() * 1.5;
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 78}%;width:${size}px;height:${size}px;--d:${3 + Math.random() * 5}s;--delay:${-Math.random() * 8}s;--o:${0.5 + Math.random() * 0.5}`;
+    frag.appendChild(s);
+  }
+  stars.appendChild(frag);
+
+  // Nav background once scrolled.
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 24);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hero phone follows the pointer.
+  const stage = document.getElementById('stage');
+  const tilt = document.getElementById('tilt');
+  if (!reduce && matchMedia('(hover: hover)').matches) {
+    addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+      const y = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+      tilt.style.transform = `rotateY(${-14 + x * 22}deg) rotateX(${6 - y * 14}deg) rotateZ(2deg)`;
+    }, { passive: true });
+  }
+
+  // Shrinking file demo: 1.18 GB → 141.8 MB, as in the app's own result screen.
+  const to = document.getElementById('shrink-to');
+  const bar = document.getElementById('shrink-bar');
+  const pct = document.getElementById('shrink-pct');
+  const from = 1180, target = 141.8;
+  const fmt = (mb) => mb >= 1000 ? (mb / 1000).toFixed(2) + ' GB' : mb.toFixed(1) + ' MB';
+  function shrink() {
+    if (reduce) { to.textContent = fmt(target); bar.style.width = '12%'; return; }
+    bar.style.transition = 'none'; bar.style.width = '100%'; to.textContent = fmt(from); pct.style.opacity = 0;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      bar.style.transition = ''; bar.style.width = (target / from * 100) + '%';
+      const t0 = performance.now(), dur = 2200;
+      const tick = (t) => {
+        const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+        to.textContent = fmt(from + (target - from) * e);
+        if (p < 1) requestAnimationFrame(tick);
+        else { pct.style.transition = 'opacity .4s'; pct.style.opacity = 1; }
+      };
+      requestAnimationFrame(tick);
+    }));
+  }
+  setTimeout(shrink, 1400);
+  if (!reduce) setInterval(shrink, 7000);
+
+  // Scroll reveals.
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .ladder').forEach((el) => io.observe(el));
+
+  // How it works: swap the sticky phone's screen with the step in view.
+  const steps = [...document.querySelectorAll('.step')];
+  const shots = [...document.querySelectorAll('#sticky-screen img')];
+  const stepIO = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const i = +e.target.dataset.shot;
+      steps.forEach((s) => s.classList.toggle('active', s === e.target));
+      shots.forEach((img, j) => img.classList.toggle('on', j === i));
+    }
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach((s) => stepIO.observe(s));
+
+  // Quality pills cycle like the app's slider.
+  const pills = [...document.querySelectorAll('#pills .pill')];
+  if (!reduce) {
+    let k = 2;
+    setInterval(() => {
+      k = (k + 1) % pills.length;
+      pills.forEach((p, j) => p.classList.toggle('on', j === k));
+    }, 1600);
+  }
+})();
+</script>
+</body>
+</html>

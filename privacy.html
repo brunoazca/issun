@@ -1,36 +1,157 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Issun — Privacy Policy</title>
-<style>body{font:16px/1.6 -apple-system,system-ui,sans-serif;max-width:680px;margin:40px auto;padding:0 16px;color:#222;background:#fff}h1{font-size:28px}h2{font-size:18px;margin-top:28px}a{color:#0a66c2}@media (prefers-color-scheme:dark){body{color:#e6e6e6;background:#111}a{color:#6cb6ff}}</style></head>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Issun Privacy Policy</title>
+<meta name="description" content="How Issun: Video Compressor handles your videos and data. Your videos are compressed on your iPhone and never uploaded.">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky-top: #2C2270; --sky-bottom: #130F33;
+    --vermilion: #D93E25; --gold: #A9690A; --gold-bright: #F0B33E;
+    --canvas: #F6F5FB; --surface: #FFFFFF; --muted: #ECEAF5;
+    --text: #16132E; --text-2: #55516F; --line: #E2E0EE;
+    --font: ui-rounded, "SF Pro Rounded", Nunito, system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --vermilion: #FF6A4D; --gold: #F0B33E;
+      --canvas: #100D2A; --surface: #1D1945; --muted: #2A2558;
+      --text: #F1F0FA; --text-2: #ABA8C9; --line: #2E2960;
+    }
+  }
+  :root[data-theme="dark"] {
+    --vermilion: #FF6A4D; --gold: #F0B33E;
+    --canvas: #100D2A; --surface: #1D1945; --muted: #2A2558;
+    --text: #F1F0FA; --text-2: #ABA8C9; --line: #2E2960;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--canvas); color: var(--text); font: 17px/1.65 var(--font); }
+  a { color: var(--vermilion); text-underline-offset: 3px; }
+  header {
+    background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+    color: #fff; padding: 20px 16px 64px; position: relative; overflow: hidden;
+  }
+  header::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(1.5px 1.5px at 12% 30%, #fff9 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 22%, #fff8 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 70%, #fff7 50%, transparent 51%),
+      radial-gradient(2px 2px at 90% 64%, #fff6 50%, transparent 51%),
+      radial-gradient(1px 1px at 62% 40%, #fff8 50%, transparent 51%);
+  }
+  .bar { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 10px; }
+  .bar a { color: #fff; text-decoration: none; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .bar img { width: 34px; height: 34px; border-radius: 9px; }
+  header h1 { max-width: 760px; margin: 48px auto 6px; font-size: clamp(32px, 6vw, 46px); line-height: 1.1; font-weight: 900; letter-spacing: -0.01em; }
+  header p { max-width: 760px; margin: 0 auto; color: #DDE0F0; }
+  main { max-width: 760px; margin: -36px auto 0; padding: 0 16px 64px; position: relative; }
+  .summary {
+    background: var(--surface); border-radius: 22px; padding: 22px 24px;
+    box-shadow: 0 18px 50px -24px rgba(19, 15, 51, 0.45);
+  }
+  .summary h2 { margin-top: 0; }
+  .summary ul { margin: 0; padding-left: 20px; }
+  h2 { font-size: 22px; font-weight: 900; margin: 40px 0 8px; line-height: 1.25; }
+  h3 { font-size: 17px; font-weight: 800; margin: 22px 0 4px; }
+  li { margin: 4px 0; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; background: var(--surface); border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--muted); font-weight: 800; }
+  tr:last-child td { border-bottom: 0; }
+  code { font-size: 0.9em; background: var(--muted); padding: 1px 6px; border-radius: 6px; }
+  footer { border-top: 1px solid var(--line); max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; color: var(--text-2); font-size: 15px; }
+</style>
+</head>
 <body>
-<h1>Issun Privacy Policy</h1>
-<p><em>Last updated: October 27, 2026</em></p>
-<p>Issun is a video compressor for iPhone. Your videos are processed entirely on your device and are never uploaded to us or to anyone else.</p>
+<header>
+  <div class="bar"><a href="./"><img src="img/apple-touch-icon.png" alt="">Issun</a></div>
+  <h1>Privacy Policy</h1>
+  <p>Last updated: October 28, 2026</p>
+</header>
 
-<h2>Your videos and Photos library</h2>
-<p>With your permission, Issun reads your Photos library to list your videos by size, compresses the videos you choose, and saves the compressed copies back to your library with their original date and location. If you ask it to, Issun moves the original videos to Recently Deleted. All of this happens on your device. Issun does not send your videos, photos, or their metadata anywhere.</p>
+<main>
+  <section class="summary">
+    <h2>The short version</h2>
+    <ul>
+      <li>Your videos are compressed <strong>on your iPhone</strong>. They are never uploaded to us or to anyone else.</li>
+      <li>Issun has no accounts and no servers of its own.</li>
+      <li>Issun sends <strong>anonymous usage events</strong> (counts, sizes and outcomes, never your videos) to PostHog so we can see how the app is used.</li>
+      <li>Issun shows a video ad from <strong>Google AdMob</strong> while your videos compress. Google collects some device data to serve ads, subject to your consent and tracking choices.</li>
+    </ul>
+  </section>
 
-<h2>Data stored on your device</h2>
-<p>Issun keeps a local count of videos compressed and space freed. It stays on your device and is removed when you delete the app.</p>
+  <p>Issun: Video Compressor ("Issun", "we") is an iPhone app by Bruno Azambuja Carvalho. This policy explains what the app does with your data.</p>
 
-<h2>Advertising</h2>
-<p>Issun shows a rewarded video ad provided by Google AdMob while your videos compress. To show and measure ads, the Google Mobile Ads SDK may collect information such as your device's advertising identifier (IDFA, only if you allow tracking), IP address and approximate location derived from it, device and app information, ad interactions, and crash and performance diagnostics. This data is collected and processed by Google, not by Issun. Learn more in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a> and the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+  <h2>Your videos and Photos library</h2>
+  <p>With your permission, Issun reads your Photos library to list your videos by size. It compresses only the videos you choose, and saves the compressed copies back to your library with their original date and location. If you ask it to, Issun deletes the original videos. iOS asks you to confirm first, and the originals go to Recently Deleted.</p>
+  <p>All of this happens on your device. Issun does not send your videos, photos, file names, thumbnails or their metadata (such as dates or locations) anywhere.</p>
+  <p>You can change Photos access anytime in Settings → Privacy &amp; Security → Photos.</p>
 
-<h2>Your choices</h2>
-<ul>
-<li><strong>Tracking:</strong> iOS asks whether Issun may track you for personalized ads. If you decline, ads are not personalized using your advertising identifier. You can change this anytime in Settings → Privacy &amp; Security → Tracking.</li>
-<li><strong>Consent (EEA, UK, Brazil and other regions):</strong> where required by law (such as the GDPR or LGPD), Issun shows Google's consent form before any ads are requested. You can decline, and you can change your choice later.</li>
-</ul>
+  <h2>Data stored on your device</h2>
+  <p>Issun keeps a few values on your iPhone to power your profile and ranks: the number of videos and batches compressed, the space freed, the last rank you've seen and whether you've shared your savings card. These values are not sent to us and are removed when you delete the app.</p>
 
-<h2>What we don't do</h2>
-<p>Issun has no accounts, no analytics of its own, and no servers. We do not sell your data, and we do not receive your videos or personal information.</p>
+  <h2>Sharing your savings card</h2>
+  <p>From your profile you can share an image of how much space you've freed. It opens the standard iOS share sheet, and the image goes only where you choose to send it.</p>
 
-<h2>Children</h2>
-<p>Issun is not directed at children under 13, and we do not knowingly collect personal information from them.</p>
+  <h2>Anonymous usage analytics (PostHog)</h2>
+  <p>To understand how the app is used and improve it, Issun sends anonymous events to <a href="https://posthog.com/privacy">PostHog</a>, an analytics service. Events are sent to PostHog's US servers.</p>
+  <h3>What is sent</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Event</th><th>Details included</th></tr>
+    <tr><td>Photos access answered</td><td>Whether you allowed full, limited or no access</td></tr>
+    <tr><td>Compression set up and started</td><td>Number of videos, their total size and the average quality level chosen</td></tr>
+    <tr><td>Ad finished</td><td>Whether the ad was completed, skipped or unavailable</td></tr>
+    <tr><td>Compression finished</td><td>How many videos were done, skipped, failed or cancelled, sizes before and after, how long it took, and whether it finished in the background</td></tr>
+    <tr><td>Originals deleted</td><td>Number of videos and space freed</td></tr>
+    <tr><td>Profile opened</td><td>None</td></tr>
+    <tr><td>App lifecycle</td><td>App installed, updated, opened or sent to the background</td></tr>
+  </table>
+  </div>
+  <p>Like most analytics tools, the PostHog SDK also attaches basic technical information to each event, such as app version, iOS version, device model, language and time zone. It uses a random identifier that it generates and stores on your device. This identifier is not linked to your name, Apple ID, email or advertising identifier. When the app connects to PostHog, PostHog receives your IP address and may use it to estimate an approximate location (such as country or city).</p>
+  <p>Issun does not use PostHog for advertising. It does not create user profiles there, and it does not record your screen or sessions.</p>
 
-<h2>Changes</h2>
-<p>If this policy changes, the updated version will be posted on this page with a new date.</p>
+  <h2>Advertising (Google AdMob)</h2>
+  <p>When you start compressing, Issun plays a rewarded video ad from Google AdMob. If no ad is available, compression continues without one.</p>
+  <p>To show and measure ads, the Google Mobile Ads SDK may collect information such as:</p>
+  <ul>
+    <li>your device's advertising identifier (IDFA, only if you allow tracking),</li>
+    <li>your IP address and an approximate location derived from it,</li>
+    <li>device and app information,</li>
+    <li>your interactions with ads,</li>
+    <li>crash and performance diagnostics.</li>
+  </ul>
+  <p>Google collects and processes this data, not Issun. Learn more in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a> and the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
 
-<h2>Contact</h2>
-<p>Questions or requests: <a href="mailto:issunapp@gmail.com">issunapp@gmail.com</a></p>
-</body></html>
+  <h2>Your choices</h2>
+  <ul>
+    <li><strong>Consent (EEA, UK, Brazil and other regions):</strong> where the law requires it (for example the GDPR or LGPD), Issun shows Google's consent form before any ads are requested. You can decline, and you can change your choice later.</li>
+    <li><strong>Tracking:</strong> iOS asks whether Issun may track you for more relevant ads. If you decline, your advertising identifier is not used, and the app works exactly the same. You can change this anytime in Settings → Privacy &amp; Security → Tracking.</li>
+    <li><strong>Photos access:</strong> you can grant full or limited access, or revoke it, in Settings → Privacy &amp; Security → Photos.</li>
+    <li><strong>Analytics:</strong> there is no in-app switch for analytics. Because events are anonymous, we usually can't link them to you, but you can still email us with any request.</li>
+  </ul>
+
+  <h2>What we don't do</h2>
+  <p>We don't upload your videos, don't run servers that receive your personal data, don't require an account and don't sell your data.</p>
+
+  <h2>Children</h2>
+  <p>Issun is not directed at children under 13, and we do not knowingly collect personal information from them.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, we'll post the updated version on this page with a new date.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or requests: <a href="mailto:issunapp@gmail.com">issunapp@gmail.com</a></p>
+</main>
+
+<footer>© 2026 Bruno Azambuja Carvalho · <a href="./">Issun home</a></footer>
+</body>
+</html>
